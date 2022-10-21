@@ -116,6 +116,9 @@ def clear_folders(dir_list, untouchible_folder_list):
 def main():
     try:
         path = sys.argv[1]
+    except IndexError:
+        print("\nYou have to write full folder name for sorting after script name!!!\nTry again please.\n")
+    else:
         path = Path(path)
         create_folders(path, untouchible_folder_list)
         recursive_search(path, files_list, dir_list)
@@ -123,8 +126,6 @@ def main():
         clear_folders(dir_list, untouchible_folder_list)
         print(
             f"file_dict  =   {file_dict},\n file_extension   =    {file_extension}")
-    except IndexError:
-        print("\nYou have to write full folder name for sorting after script name!!!\nTry again please.\n")
 
 
 if __name__ == '__main__':
