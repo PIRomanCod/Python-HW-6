@@ -90,9 +90,9 @@ def recursive_search(path, files_list, dir_list):
         for element in path.iterdir():
             if element in untouchible_folder_list:
                 continue
-            if not element.is_dir():
+            if element.is_file():
                 files_list.append(str(element))
-            if element.is_dir():
+            elif element.is_dir():
                 dir_list.append(str(element))
                 recursive_search(element, files_list, dir_list)
     return dir_list
@@ -108,21 +108,23 @@ def create_folders(path, untouchible_folder_list):
 
 
 def clear_folders(dir_list, untouchible_folder_list):
-    dir_list = dir_list[::-1]
-    for element in dir_list:
+    for element in dir_list[::-1]:
         if element not in untouchible_folder_list:
             Path(element).rmdir()
 
 
 def main():
-    path = sys.argv[1]
-    path = Path(path)
-    create_folders(path, untouchible_folder_list)
-    recursive_search(path, files_list, dir_list)
-    sort(files_list, path, file_dict, file_extension)
-    clear_folders(dir_list, untouchible_folder_list)
-    print(
-        f"file_dict  =   {file_dict},\n file_extension   =    {file_extension}")
+    try:
+        path = sys.argv[1]
+        path = Path(path)
+        create_folders(path, untouchible_folder_list)
+        recursive_search(path, files_list, dir_list)
+        sort(files_list, path, file_dict, file_extension)
+        clear_folders(dir_list, untouchible_folder_list)
+        print(
+            f"file_dict  =   {file_dict},\n file_extension   =    {file_extension}")
+    except IndexError:
+        print("\nYou have to write full folder name for sorting after script name!!!\nTry again please.\n")
 
 
 if __name__ == '__main__':
